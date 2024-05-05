@@ -7,10 +7,10 @@
 ##
 
 # All the source files
-SOURCES			= 	src/main.c		\
-					src/panoramix.c	\
+SOURCES			= 	src/main.c				\
+					src/panoramix.c			\
 
-TESTS			=
+TESTS			=	tests/parsing.spec.c	\
 
 LIBS			=
 
@@ -221,7 +221,7 @@ All tests passed successfully$(RESET)\n" \
 	|| (printf "$(FAILURE)$(RED)  🚨   \
 Some tests failed$(RESET)\n" && exit 1)
 
-_tests_run: fclean tests_libs $(LIBS) $(filter-out src/main.o, $(OBJS))
+_tests_run: fclean tests_libs $(LIBS) $(filter-out src/main.o, $(OBJS)) \
 	$(TESTS_OBJS)
 	@printf "$(RUNNING) $(BLUE) 🔗   Linking for $(shell uname -m)\
  architecture$(RESET)";

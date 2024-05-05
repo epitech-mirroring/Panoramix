@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <string.h>
 #include "panoramix.h"
 
 static bool is_number(const char *str)
@@ -21,9 +22,11 @@ static bool is_number(const char *str)
 
 static void print_usage(void)
 {
-    write(2, "USAGE: ./panoramix <nb_villagers> <pot_size>"
-        "<nb_fights> <nb_refills>\n", 70);
-    write(2, "Values must be >0.\n", 19);
+    write(2, "USAGE: ./panoramix <nb_villagers> <pot_size> "
+        "<nb_fights> <nb_refills>\n", strlen(
+            "USAGE: ./panoramix <nb_villagers> <pot_size> "
+            "<nb_fights> <nb_refills>\n"));
+    write(2, "Values must be >0.\n", strlen("Values must be >0.\n"));
 }
 
 static bool are_args_valid(int ac, char **av)
