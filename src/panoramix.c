@@ -10,8 +10,6 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <string.h>
-#include <printf.h>
-#include <errno.h>
 #include "panoramix.h"
 
 static bool is_number(const char *str)
@@ -73,7 +71,7 @@ void destroy_panoramix(panoramix_t *panoramix)
     if (panoramix->sem)
         sem_destroy(panoramix->sem);
     if (panoramix->mutex)
-        free(panoramix->mutex);
+        pthread_mutex_destroy(panoramix->mutex);
     if (panoramix->druid)
         destroy_druid(panoramix->druid);
     free(panoramix);

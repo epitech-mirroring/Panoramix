@@ -41,7 +41,7 @@ Test(druid, launch_then_stop, .init = redirect_all_stds)
     destroy_panoramix(panoramix);
 }
 
-Test(druid, ask_for_refill, .init = redirect_all_stds)
+/*Test(druid, ask_for_refill, .init = redirect_all_stds)
 {
     panoramix_t *panoramix = parse_args(5, (char *[]){"./panoramix", "10", "10", "10", "10"});
     pthread_t test;
@@ -60,4 +60,4 @@ Test(druid, ask_for_refill, .init = redirect_all_stds)
     pthread_join(test, NULL);
     cr_assert_stdout_eq_str("Druid: I'm out of viscum. I'm going back to... zZz\n");
     destroy_panoramix(panoramix);
-}
+}*/

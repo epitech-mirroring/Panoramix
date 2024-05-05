@@ -25,7 +25,7 @@ druid_t *create_druid(size_t remaining_refills, panoramix_t *panoramix)
 
 void refill_druid(druid_t *druid)
 {
-    if (druid->remaining_refills == 0)
+    if (druid->remaining_refills == 0 || druid->should_stop)
         return;
     printf("Druid: Ah! Yes, yes, yes, I'm awake! Working on it! Beware I can"
            " only make %zu more refills after this one!\n",
@@ -46,12 +46,10 @@ void *run_druid(void *arg)
 
     printf("Druid: I'm ready... but sleepy...\n");
     fflush(stdout);
-    while (druid->remaining_refills > 0) {
+    while (druid->remaining_refills > 0 && !druid->should_stop) {
         if (sem_wait(druid->panoramix->sem) == -1) {
             break;
         }
-        if (druid->should_stop)
-            break;
         refill_druid(druid);
     }
     printf("Druid: I'm out of viscum. I'm going back to... zZz\n");
