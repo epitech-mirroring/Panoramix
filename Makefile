@@ -7,9 +7,10 @@
 ##
 
 # All the source files
-SOURCES			= 	src/main.c
+SOURCES			= 	src/main.c				\
+					src/panoramix.c			\
 
-TESTS			=
+TESTS			=	tests/parsing.spec.c	\
 
 LIBS			=
 
@@ -42,7 +43,7 @@ SUCCESS = [$(GREEN)✔$(RESET)]
 FAILURE = [$(RED)✘$(RESET)]
 SKIPPED = [$(MAGENTA)@$(RESET)]
 
-ifeq ($(COVERAGE_ENABLED), 1)
+ifeq ($(ENABLE_COVERAGE), 1)
 	CFLAGS	+= --coverage -g3
 else
 	CFLAGS	+= -O3
@@ -206,6 +207,7 @@ $(TESTS_OBJS):	%.o: %.c
 tests_libs:
 	@for lib in $(LIBS); do \
 		make -C $$(dirname $$lib) tests_run --no-print-directory \
+		ENABLE_COVERAGE=1 \
 		&& printf "$(SUCCESS)$(GREEN)  🎉   Tests for $$(basename $$lib) \
 passed successfully$(RESET)\n" \
 		|| (printf "$(FAILURE)$(RED)  🚨   Tests for $$(basename $$lib) \
@@ -213,18 +215,18 @@ failed$(RESET)\n" && exit 1); \
 	done
 
 tests_run:
-	@export ENABLE_COVERAGE=1; \
-	make _tests_run --no-print-directory	\
+	@make _tests_run --no-print-directory ENABLE_COVERAGE=1 \
 	&& printf "$(SUCCESS)$(GREEN)  🎉   \
 All tests passed successfully$(RESET)\n" \
 	|| (printf "$(FAILURE)$(RED)  🚨   \
 Some tests failed$(RESET)\n" && exit 1)
 
-_tests_run: fclean tests_libs $(LIBS) $(OBJS) $(TESTS_OBJS)
+_tests_run: fclean tests_libs $(LIBS) $(filter-out src/main.o, $(OBJS)) \
+	$(TESTS_OBJS)
 	@printf "$(RUNNING) $(BLUE) 🔗   Linking for $(shell uname -m)\
  architecture$(RESET)";
 	@$(CC) -o tests.out $(filter-out src/main.o, $(OBJS)) \
-	$(TESTS_OBJS) $(FLAGS) -lcriterion >> $(LOG) 2>&1 \
+	$(TESTS_OBJS) $(CFLAGS) -lcriterion >> $(LOG) 2>&1 \
 	&& printf "\r$(SUCCESS)\n" || (printf "\r$(FAILURE)\n" && \
 	cat $(LOG) && cat tests.log && exit 1);
 	@export LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:./libs/; \

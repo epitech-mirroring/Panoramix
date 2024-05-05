@@ -7,3 +7,12 @@
 */
 
 #pragma once
+#include <stddef.h>
+
+typedef struct panoramix_s {
+    size_t pot_size;
+    size_t pot_state;
+} panoramix_t;
+
+panoramix_t *parse_args(int ac, char **av);
+void destroy_panoramix(panoramix_t *panoramix);

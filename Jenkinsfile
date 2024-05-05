@@ -123,7 +123,7 @@ pipeline {
                         id: "coverage", name: "Coverage",
                         sourceCodeRetention: 'EVERY_BUILD')
 
-                    def dirs = ['']
+                    def dirs = []
 
                     for (d in dirs) {
                         dir(d) {
