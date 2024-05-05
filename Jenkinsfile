@@ -99,9 +99,6 @@ pipeline {
                 // Run the tests
                 sh 'make tests_run'
 
-                // Update gcovr
-                sh 'python3 -m pip install -Iv gcovr==6.0'
-
                 script {
                     def dirs = ['libs/json']
 
