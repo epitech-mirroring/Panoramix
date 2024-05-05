@@ -11,7 +11,12 @@ pipeline {
             steps {
                 // Clean before checkout
                 cleanWs()
-                sh 'make fclean'
+                script {
+                    // Check if a makefile exists
+                    if (fileExists('Makefile')) {
+                        sh 'make fclean'
+                    }
+                }
 
                 // Clone the repository
                 checkout scm
