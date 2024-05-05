@@ -10,6 +10,7 @@
 SOURCES			= 	src/main.c				\
 					src/panoramix.c			\
 					src/druid.c				\
+					src/villager.c			\
 
 TESTS			=	tests/parsing.spec.c	\
 					tests/druid.spec.c		\
