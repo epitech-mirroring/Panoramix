@@ -12,6 +12,7 @@
     #include <semaphore.h>
 typedef struct panoramix_s panoramix_t;
     #include "druid.h"
+    #include "villager.h"
 
 typedef struct panoramix_s {
     size_t pot_size;
@@ -20,7 +21,9 @@ typedef struct panoramix_s {
     pthread_mutex_t *mutex;
     druid_t *druid;
     pthread_t druid_thread;
+    villager_t **villagers;
     pthread_t *villagers_threads;
+    size_t villager_count;
 } panoramix_t;
 
 panoramix_t *parse_args(int ac, char **av);
