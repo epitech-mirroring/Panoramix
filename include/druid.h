@@ -7,12 +7,11 @@
 */
 
 #ifndef DRUID_H_
-#define DRUID_H_
+    #define DRUID_H_
     #include <stddef.h>
     #include <pthread.h>
     #include <semaphore.h>
-#include <stdbool.h>
-
+    #include <stdbool.h>
 typedef struct druid_s druid_t;
     #include "panoramix.h"
 

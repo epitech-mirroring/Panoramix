@@ -39,6 +39,15 @@ static bool are_args_valid(int ac, char **av)
     return true;
 }
 
+void init_panoramix(char *const *av, panoramix_t *panoramix)
+{
+    panoramix->pot_size = strtol(av[2], NULL, 10);
+    panoramix->pot_state = panoramix->pot_size;
+    panoramix->sem = malloc(sizeof(sem_t));
+    panoramix->mutex = malloc(sizeof(pthread_mutex_t));
+    panoramix->druid = create_druid(strtol(av[4], NULL, 10), panoramix);
+}
+
 panoramix_t *parse_args(int ac, char **av)
 {
     panoramix_t *panoramix = NULL;
@@ -50,11 +59,7 @@ panoramix_t *parse_args(int ac, char **av)
     panoramix = malloc(sizeof(panoramix_t));
     if (!panoramix)
         return NULL;
-    panoramix->pot_size = strtol(av[2], NULL, 10);
-    panoramix->pot_state = panoramix->pot_size;
-    panoramix->sem = malloc(sizeof(sem_t));
-    panoramix->mutex = malloc(sizeof(pthread_mutex_t));
-    panoramix->druid = create_druid(strtol(av[4], NULL, 10), panoramix);
+    init_panoramix(av, panoramix);
     if (!panoramix->sem || !panoramix->druid) {
         destroy_panoramix(panoramix);
         return NULL;
@@ -79,7 +84,8 @@ void destroy_panoramix(panoramix_t *panoramix)
 
 void launch_panoramix(panoramix_t *panoramix)
 {
-    pthread_create(&panoramix->druid_thread, NULL, &run_druid, panoramix->druid);
+    pthread_create(&panoramix->druid_thread, NULL, &run_druid,
+        panoramix->druid);
     pthread_join(panoramix->druid_thread, NULL);
 }
 
