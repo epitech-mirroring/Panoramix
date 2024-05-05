@@ -9,15 +9,18 @@
 # All the source files
 SOURCES			= 	src/main.c				\
 					src/panoramix.c			\
+					src/druid.c				\
 
 TESTS			=	tests/parsing.spec.c	\
+					tests/druid.spec.c		\
 
 LIBS			=
 
 # Compiler and linker settings
 NAME 			= 	panoramix
 CC				= 	gcc
-CFLAGS			= 	-W -Wall -Wextra -std=c99 -I./include -L./libs
+CFLAGS			= 	-W -Wall -Wextra -std=c99 -I./include -L./libs \
+					-lpthread
 MACOS_FLAGS		=
 LINUX_FLAGS		=
 CFLAGS			+=	$(shell [ `uname -s` = "Darwin" ] && echo $(MACOS_FLAGS))

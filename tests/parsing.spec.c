@@ -10,7 +10,7 @@
 #include <criterion/redirect.h>
 #include "panoramix.h"
 
-void redirect_all_stds(void)
+static void redirect_all_stds(void)
 {
     cr_redirect_stdout();
     cr_redirect_stderr();
@@ -50,6 +50,10 @@ Test(parsing, valid_args, .init = redirect_all_stds)
     cr_assert_not_null(panoramix);
     cr_assert_eq(panoramix->pot_size, 10);
     cr_assert_eq(panoramix->pot_state, 10);
+    cr_assert_not_null(panoramix->sem);
+    cr_assert_not_null(panoramix->mutex);
+    cr_assert_not_null(panoramix->druid);
+    cr_assert_eq(panoramix->druid->remaining_refills, 10);
     //TODO update this test
     destroy_panoramix(panoramix);
 }

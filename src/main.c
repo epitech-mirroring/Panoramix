@@ -14,6 +14,7 @@ int main(int ac, char **av)
 
     if (!panoramix)
         return 84;
+    launch_panoramix(panoramix);
     destroy_panoramix(panoramix);
     return 0;
 }
