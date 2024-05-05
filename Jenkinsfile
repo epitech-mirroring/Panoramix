@@ -71,21 +71,18 @@ pipeline {
 
                     // Run the build
                     sh 'make'
-                }
-            }
-        }
-        stage ('🔎 Verify') {
-            steps {
-                // Check file presence (e.g. binary, library, etc.)
-                script {
-                    def BIN_NAMES = ['raytracer']
 
-                    for (BIN_NAME in BIN_NAMES) {
-                        if (!fileExists(BIN_NAME)) {
-                            error "The binary file ${BIN_NAME} does not exist"
-                        } else {
-                            echo "The binary file ${BIN_NAME} exists"
-                            archiveArtifacts artifacts: "${BIN_NAME}", fingerprint: true
+                    // Check file presence (e.g. binary, library, etc.)
+                    script {
+                        def BIN_NAMES = ['panoramix']
+
+                        for (BIN_NAME in BIN_NAMES) {
+                            if (!fileExists(BIN_NAME)) {
+                                error "The binary file ${BIN_NAME} does not exist"
+                            } else {
+                                echo "The binary file ${BIN_NAME} exists"
+                                archiveArtifacts artifacts: "${BIN_NAME}", fingerprint: true
+                            }
                         }
                     }
                 }
