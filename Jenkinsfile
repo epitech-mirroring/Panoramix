@@ -110,12 +110,20 @@ pipeline {
 
                 sh 'gcovr --cobertura cobertura.xml --exclude tests/ --exclude libs/'
 
-                recordCoverage(tools: [[parser: 'COBERTURA']],
-                    id: "coverage", name: "Coverage",
-                    sourceCodeRetention: 'EVERY_BUILD')
-
                 script {
-                    def dirs = ['libs/json']
+                    // Check if there are .gcda files
+                    def gcda_files = findFiles(glob: '**/*.gcda')
+                    if (gcda_files.size() == 0) {
+                        unstable "No .gcda files found"
+                        // Skip the coverage step
+                        return
+                    }
+
+                    recordCoverage(tools: [[parser: 'COBERTURA']],
+                        id: "coverage", name: "Coverage",
+                        sourceCodeRetention: 'EVERY_BUILD')
+
+                    def dirs = ['']
 
                     for (d in dirs) {
                         dir(d) {
