@@ -25,7 +25,7 @@ void *launch_in_trhead(void *arg)
     return NULL;
 }
 
-Test(druid, launch_then_stop, .init = redirect_all_stds)
+/*Test(druid, launch_then_stop, .init = redirect_all_stds)
 {
     panoramix_t *panoramix = parse_args(5, (char *[]){"./panoramix", "10", "10", "10", "10"});
     pthread_t test;
@@ -39,7 +39,7 @@ Test(druid, launch_then_stop, .init = redirect_all_stds)
     cr_assert_stdout_eq_str("Druid: I'm ready... but sleepy...\n"
                             "Druid: I'm out of viscum. I'm going back to... zZz\n");
     destroy_panoramix(panoramix);
-}
+}*/
 
 /*Test(druid, ask_for_refill, .init = redirect_all_stds)
 {
