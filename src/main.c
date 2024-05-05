@@ -10,7 +10,10 @@
 
 int main(int ac, char **av)
 {
-    (void) ac;
-    (void) av;
+    panoramix_t *panoramix = parse_args(ac, av);
+
+    if (!panoramix)
+        return 84;
+    destroy_panoramix(panoramix);
     return 0;
 }

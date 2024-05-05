@@ -7,7 +7,8 @@
 ##
 
 # All the source files
-SOURCES			= 	src/main.c
+SOURCES			= 	src/main.c		\
+					src/panoramix.c	\
 
 TESTS			=
 
